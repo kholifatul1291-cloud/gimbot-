@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gim Edukasi Sumber Energi - SDLB Kelas 3</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Lexend untuk kemudahan membaca anak berkebutuhan khusus -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Animate.css untuk animasi ceria -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #e0f2fe;
+            user-select: none;
+        }
+        .bubble-bg {
+            background-image: url('https://i.imgur.com/SvmWR7p.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .btn-bounce:active {
+            transform: scale(0.92);
+        }
+    </style>
+</head>
+<body class="bubble-bg min-h-screen flex flex-col items-center justify-between p-4 overflow-x-hidden">
+
+    <!-- HEADER / SKOR BAR -->
+    <header class="w-full max-w-2xl bg-white/95 rounded-2xl shadow-md p-4 flex justify-between items-center border-4 border-sky-400 z-10">
+        <div class="flex items-center gap-3">
+            <span class="text-4xl">🌟</span>
+            <div>
+                <h1 class="text-xl font-extrabold text-sky-800">Pahlawan Energi</h1>
+                <p class="text-xs text-sky-500 font-bold">Kelas 3 SDLB</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <!-- Tombol Pengatur Musik Latar -->
+            <button id="music-toggle-btn" onclick="toggleMusic()" class="bg-pink-100 hover:bg-pink-200 border-2 border-pink-400 p-2.5 rounded-full text-xl btn-bounce flex items-center justify-center shadow-sm" title="Musik Latar">
+                🔇
+            </button>
+            <div class="flex items-center gap-2 bg-yellow-100 px-4 py-2 rounded-full border-2 border-yellow-400">
+                <span class="text-xl font-extrabold text-yellow-700">Skor:</span>
+                <span id="score-display" class="text-2xl font-black text-yellow-600 animate__animated">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER (SCREEN MANAGER) -->
+    <main class="w-full max-w-2xl bg-white/95 rounded-3xl shadow-xl border-8 border-sky-400 p-6 my-4 flex-grow flex flex-col justify-center relative min-h-[480px] z-10">
+        
+        <!-- ================= BERANDA SCREEN ================= -->
+        <section id="screen-home" class="flex flex-col items-center text-center gap-6 py-4">
+            <div class="animate__animated animate__bounceIn">
+                <!-- Maskot Eno -->
+                <div class="relative w-40 h-40 mx-auto bg-amber-100 rounded-full border-4 border-amber-400 flex items-center justify-center shadow-lg">
+                    <svg viewBox="0 0 100 100" class="w-32 h-32">
+                        <circle cx="50" cy="50" r="30" fill="#facc15" stroke="#eab308" stroke-width="4"/>
+                        <path d="M 50 10 L 50 20 M 50 80 L 50 90 M 10 50 L 20 50 M 80 50 L 90 50 M 22 22 L 30 30 M 70 70 L 78 78 M 22 78 L 30 70 M 70 22 L 78 30" stroke="#eab308" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="42" cy="45" r="4" fill="#1e293b"/>
+                        <circle cx="58" cy="45" r="4" fill="#1e293b"/>
+                        <circle cx="36" cy="52" r="3" fill="#f43f5e" opacity="0.6"/>
+                        <circle cx="64" cy="52" r="3" fill="#f43f5e" opacity="0.6"/>
+                        <path d="M 42 55 Q 50 63 58 55" stroke="#1e293b" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    </svg>
+                    <!-- Tombol Suara Eno -->
+                    <button onclick="speak('Halo teman-teman! Saya Eno. Mari belajar dan bermain tentang Sumber Energi bersama-sama!')" class="absolute -top-2 -right-2 bg-pink-500 hover:bg-pink-600 text-white p-3 rounded-full shadow-lg border-2 border-white btn-bounce">
+                        🔊
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-3xl font-black text-sky-800 animate__animated animate__fadeInDown">Ayo Belajar Energi!</h2>
+                <p class="text-gray-600 font-semibold mt-2">Pilih petualanganmu hari ini:</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 w-full px-4 mt-2">
+                <button onclick="changeScreen('learn')" class="flex-1 bg-emerald-500 hover:bg-emerald-600 border-b-8 border-emerald-700 text-white rounded-2xl py-5 px-6 font-black text-2xl flex flex-col items-center justify-center gap-2 shadow-lg btn-bounce transition-all">
+                    <span class="text-5xl">📖</span>
+                    <span>BELAJAR</span>
+                </button>
+                <button onclick="startPlay()" class="flex-1 bg-amber-500 hover:bg-amber-600 border-b-8 border-amber-700 text-white rounded-2xl py-5 px-6 font-black text-2xl flex flex-col items-center justify-center gap-2 shadow-lg btn-bounce transition-all">
+                    <span class="text-5xl">🎮</span>
+                    <span>BERMAIN</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= BELAJAR SCREEN ================= -->
+        <section id="screen-learn" class="hidden flex flex-col justify-between h-full gap-6">
+            <div class="flex justify-between items-center border-b-4 border-dashed border-sky-100 pb-3">
+                <button onclick="changeScreen('home')" class="bg-red-500 hover:bg-red-600 text-white font-black px-4 py-2 rounded-xl text-lg btn-bounce shadow">
+                    ⬅ Kembali
+                </button>
+                <h3 class="text-2xl font-black text-sky-800 flex items-center gap-2">
+                    <span>📖 Belajar Energi</span>
+                </h3>
+                <button onclick="speakCurrentSlide()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold p-3 rounded-full btn-bounce shadow-md" title="Dengarkan Suara">
+                    🔊 Baca Suara
+                </button>
+            </div>
+
+            <!-- Tempat materi (slide) dimuat -->
+            <div id="slide-container" class="flex-grow flex flex-col items-center justify-center text-center p-4">
+                <!-- Diisi otomatis melalui JavaScript -->
+            </div>
+
+            <!-- Tombol Navigasi Slide -->
+            <div class="flex justify-between items-center gap-4 mt-4">
+                <button onclick="prevSlide()" id="btn-prev" class="flex-1 bg-sky-400 hover:bg-sky-500 disabled:opacity-40 text-white font-extrabold py-3 px-6 rounded-2xl text-xl border-b-4 border-sky-600 btn-bounce">
+                    « Mundur
+                </button>
+                <span id="slide-indicator" class="text-xl font-bold text-sky-700">1 / 4</span>
+                <button onclick="nextSlide()" id="btn-next" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold py-3 px-6 rounded-2xl text-xl border-b-4 border-emerald-700 btn-bounce">
+                    Lanjut »
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= BERMAIN (GAME MENU) SCREEN ================= -->
+        <section id="screen-play" class="hidden flex flex-col gap-6">
+            <div class="flex items-center justify-between border-b-4 border-dashed border-sky-100 pb-3">
+                <button onclick="changeScreen('home')" class="bg-red-500 hover:bg-red-600 text-white font-black px-4 py-2 rounded-xl text-lg btn-bounce shadow">
+                    ⬅ Beranda
+                </button>
+                <h3 class="text-2xl font-black text-amber-600">Pilih Game Seru!</h3>
+                <div class="w-10"></div>
+            </div>
+
+            <div class="flex flex-col gap-4 mt-4">
+                <button onclick="startGameQuiz()" class="bg-violet-500 hover:bg-violet-600 border-b-8 border-violet-700 text-white p-5 rounded-2xl flex items-center gap-4 text-left shadow-lg btn-bounce transition-all">
+                    <span class="text-5xl bg-white/20 p-3 rounded-xl">❓</span>
+                    <div>
+                        <h4 class="text-2xl font-black">1. Tebak Gambar Energi</h4>
+                        <p class="text-sm opacity-90 font-bold">Pilih jawaban gambar yang paling tepat!</p>
+                    </div>
+                </button>
+
+                <button onclick="startGameMatch()" class="bg-indigo-500 hover:bg-indigo-600 border-b-8 border-indigo-700 text-white p-5 rounded-2xl flex items-center gap-4 text-left shadow-lg btn-bounce transition-all">
+                    <span class="text-5xl bg-white/20 p-3 rounded-xl">🧩</span>
+                    <div>
+                        <h4 class="text-2xl font-black">2. Pasangkan Energi</h4>
+                        <p class="text-sm opacity-90 font-bold">Pasangkan sumber energi dengan kegunaannya!</p>
+                    </div>
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= BERMAIN: TEBAK GAMBAR (QUIZ) ================= -->
+        <section id="screen-quiz" class="hidden flex flex-col justify-between h-full gap-4">
+            <div class="flex justify-between items-center border-b-4 border-dashed border-sky-100 pb-2">
+                <button onclick="changeScreen('play')" class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1.5 rounded-xl btn-bounce text-sm">
+                    ⬅ Keluar
+                </button>
+                <span class="text-lg font-black text-violet-700">Tebak Gambar</span>
+                <button onclick="speakQuizQuestion()" class="bg-pink-500 hover:bg-pink-600 text-white p-2 rounded-full btn-bounce shadow-md">
+                    🔊 Baca Soal
+                </button>
+            </div>
+
+            <div class="flex-grow flex flex-col items-center justify-center text-center py-2">
+                <div id="quiz-question-box" class="bg-violet-50 border-4 border-violet-200 rounded-2xl p-4 w-full mb-4">
+                    <p id="quiz-text" class="text-2xl font-black text-violet-900 leading-relaxed">Memuat kuis...</p>
+                </div>
+
+                <div id="quiz-image-container" class="mb-4">
+                    <!-- Ilustrasi SVG kuis dimasukkan di sini -->
+                </div>
+
+                <div id="quiz-options-container" class="grid grid-cols-2 gap-4 w-full">
+                    <!-- Tombol pilihan kuis -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= BERMAIN: PASANGKAN (MATCHING) ================= -->
+        <section id="screen-match" class="hidden flex flex-col justify-between h-full gap-4">
+            <div class="flex justify-between items-center border-b-4 border-dashed border-sky-100 pb-2">
+                <button onclick="changeScreen('play')" class="bg-red-500 hover:bg-red-600 text-white font-bold px-3 py-1.5 rounded-xl btn-bounce text-sm">
+                    ⬅ Keluar
+                </button>
+                <span class="text-lg font-black text-indigo-700">Hubungkan Pasangan</span>
+                <button onclick="speakMatchGuide()" class="bg-pink-500 hover:bg-pink-600 text-white p-2 rounded-full btn-bounce shadow-md">
+                    🔊 Petunjuk
+                </button>
+            </div>
+
+            <div class="bg-indigo-50 border-4 border-indigo-200 rounded-2xl p-3 text-center mb-2">
+                <p class="text-xl font-extrabold text-indigo-900 leading-normal">
+                    Pilih gambar di <span class="text-amber-600">Kiri</span>, lalu pasangkan dengan gambar di <span class="text-emerald-600">Kanan</span>!
+                </p>
+            </div>
+
+            <div class="flex-grow grid grid-cols-2 gap-6 items-stretch justify-center py-2">
+                <!-- Kolom Kiri: Sumber Energi -->
+                <div class="flex flex-col gap-4 justify-around">
+                    <p class="text-center font-bold text-amber-700 text-base border-b-2 border-amber-300 pb-1">SUMBER ENERGI</p>
+                    <div id="match-left-container" class="flex flex-col gap-3 flex-grow justify-around">
+                        <!-- Diisi oleh JS -->
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Kegunaan -->
+                <div class="flex flex-col gap-4 justify-around">
+                    <p class="text-center font-bold text-emerald-700 text-base border-b-2 border-emerald-300 pb-1">KEGUNAAN</p>
+                    <div id="match-right-container" class="flex flex-col gap-3 flex-grow justify-around">
+                        <!-- Diisi oleh JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= GAME OVER / SELESAI SCREEN ================= -->
+        <section id="screen-congrats" class="hidden flex flex-col items-center text-center gap-6 py-6">
+            <div class="animate__animated animate__jackInTheBox">
+                <span class="text-8xl">🏆</span>
+            </div>
+
+            <div>
+                <h2 class="text-4xl font-black text-emerald-600">HEBAT SEKALI!</h2>
+                <p class="text-xl font-bold text-gray-600 mt-2">Kamu berhasil menyelesaikan semua petualangan!</p>
+            </div>
+
+            <div class="bg-yellow-100 border-4 border-yellow-400 p-6 rounded-3xl max-w-sm w-full shadow-md">
+                <p class="text-xl font-bold text-yellow-800">Skor Akhir Kamu:</p>
+                <p id="congrats-score" class="text-6xl font-black text-yellow-600 my-2">0</p>
+                <p class="text-base text-yellow-700 font-extrabold">Kamu adalah Pahlawan Energi Sejati! 🌟</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 w-full px-4">
+                <button onclick="changeScreen('home')" class="flex-1 bg-sky-500 hover:bg-sky-600 border-b-6 border-sky-700 text-white font-extrabold py-4 rounded-2xl text-xl btn-bounce">
+                    🏡 Kembali Ke Beranda
+                </button>
+            </div>
+        </section>
+
+        <!-- OVERLAY ALERTS / FEEDBACK MODALS -->
+        <div id="feedback-overlay" class="hidden absolute inset-0 bg-black/60 rounded-[1.4rem] z-30 flex flex-col items-center justify-center p-6 animate__animated animate__fadeIn">
+            <div id="feedback-card" class="bg-white border-8 rounded-3xl p-6 text-center max-w-sm w-full animate__animated">
+                <span id="feedback-emoji" class="text-8xl block mb-4">🎉</span>
+                <h4 id="feedback-title" class="text-3xl font-black mb-2">BENAR!</h4>
+                <p id="feedback-desc" class="text-lg font-bold text-gray-600 mb-6">Ulasan jawaban...</p>
+                <button onclick="closeFeedback()" id="feedback-btn" class="w-full text-white font-black text-xl py-3 rounded-2xl shadow-md btn-bounce">
+                    Lanjut
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Background Music Element -->
+    <audio id="bg-music" loop>
+        <source src="https://github.com/kholifatul1291-cloud/musik-gim/raw/refs/heads/main/Genki_Hyakumanchou_.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen musik.
+    </audio>
+
+    <!-- FOOTER / CREDIT -->
+    <footer class="text-center text-sky-800 font-bold text-xs py-2 bg-sky-200/50 w-full max-w-2xl rounded-xl border border-sky-300">
+        &copy; 2026 Belajar Bersama Eno - Media Pembelajaran Ramah Anak SDLB
+    </footer>
+
+    <!-- LOGIKA JAVASCRIPT GIM -->
+    <script>
+        // Game State
+        let score = 0;
+        let activeScreen = 'home';
+        let currentSlideIndex = 0;
+        let currentQuizIndex = 0;
+        
+        // Match Game State
+        let selectedLeftId = null;
+        let selectedRightId = null;
+        let matchedPairs = [];
+
+        // Music Control State
+        let isMusicPlaying = false;
+
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            const btn = document.getElementById('music-toggle-btn');
+            
+            if (!music) return;
+
+            if (isMusicPlaying) {
+                music.pause();
+                btn.innerHTML = '🔇';
+                btn.className = 'bg-pink-100 hover:bg-pink-200 border-2 border-pink-400 p-2.5 rounded-full text-xl btn-bounce flex items-center justify-center shadow-sm';
+                isMusicPlaying = false;
+            } else {
+                music.play().then(() => {
+                    btn.innerHTML = '🎵';
+                    btn.className = 'bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-400 p-2.5 rounded-full text-xl btn-bounce flex items-center justify-center shadow-sm animate-pulse';
+                    isMusicPlaying = true;
+                }).catch(err => {
+                    console.log("Autoplay ditolak peramban.", err);
+                });
+            }
+        }
+
+        // Memulai musik saat interaksi pertama untuk ramah regulasi browser
+        function startMusicOnFirstInteraction() {
+            const music = document.getElementById('bg-music');
+            if (music && !isMusicPlaying) {
+                music.play().then(() => {
+                    isMusicPlaying = true;
+                    const btn = document.getElementById('music-toggle-btn');
+                    if (btn) {
+                        btn.innerHTML = '🎵';
+                        btn.className = 'bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-400 p-2.5 rounded-full text-xl btn-bounce flex items-center justify-center shadow-sm animate-pulse';
+                    }
+                }).catch(() => {});
+            }
+            document.removeEventListener('click', startMusicOnFirstInteraction);
+            document.removeEventListener('touchstart', startMusicOnFirstInteraction);
+        }
+
+        // High Quality SVGs untuk mempermudah visual anak
+        const svgAssets = {
+            matahari: `
+                <svg viewBox="0 0 100 100" class="w-40 h-40 mx-auto filter drop-shadow">
+                    <circle cx="50" cy="50" r="24" fill="#facc15" stroke="#eab308" stroke-width="3"/>
+                    <g stroke="#eab308" stroke-width="4" stroke-linecap="round">
+                        <line x1="50" y1="12" x2="50" y2="20" />
+                        <line x1="50" y1="80" x2="50" y2="88" />
+                        <line x1="12" y1="50" x2="20" y2="50" />
+                        <line x1="80" y1="50" x2="88" y2="50" />
+                        <line x1="23" y1="23" x2="29" y2="29" />
+                        <line x1="71" y1="71" x2="77" y2="77" />
+                        <line x1="23" y1="78" x2="29" y2="72" />
+                        <line x1="71" y1="29" x2="77" y2="23" />
+                    </g>
+                    <circle cx="43" cy="46" r="3" fill="#1e293b"/>
+                    <circle cx="57" cy="46" r="3" fill="#1e293b"/>
+                    <path d="M 43 54 Q 50 60 57 54" stroke="#1e293b" stroke-width="2" fill="none" stroke-linecap="round"/>
+                </svg>
+            `,
+            air: `
+                <svg viewBox="0 0 100 100" class="w-40 h-40 mx-auto filter drop-shadow">
+                    <path d="M 50 15 C 50 15, 75 52, 75 65 A 25 25 0 0 1 25 65 C 25 52, 50 15, 50 15 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="3" stroke-linejoin="round"/>
+                    <path d="M 35 62 A 15 15 0 0 1 45 48" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none"/>
+                    <circle cx="43" cy="62" r="3" fill="#1e293b"/>
+                    <circle cx="57" cy="62" r="3" fill="#1e293b"/>
+                    <path d="M 45 68 Q 50 73 55 68" stroke="#1e293b" stroke-width="2" fill="none" stroke-linecap="round"/>
+                </svg>
+            `,
+            angin: `
+                <svg viewBox="0 0 100 100" class="w-40 h-40 mx-auto filter drop-shadow">
+                    <g fill="none" stroke="#64748b" stroke-width="4" stroke-linecap="round">
+                        <path d="M 15 35 L 65 35 C 72 35, 72 25, 65 25 C 58 25, 58 35, 58 35" />
+                        <path d="M 10 50 L 80 50 C 87 50, 87 40, 80 40 C 73 40, 73 50, 73 50" />
+                        <path d="M 20 65 L 55 65 C 62 65, 62 55, 55 55 C 48 55, 48 65, 48 65" />
+                    </g>
+                    <path d="M 40 40 C 40 40, 48 30, 58 35 C 65 30, 75 35, 75 45 C 80 45, 85 52, 80 60 C 78 65, 40 65, 40 60 C 35 55, 37 45, 40 40 Z" fill="#f1f5f9" stroke="#94a3b8" stroke-width="3" stroke-linejoin="round"/>
+                    <circle cx="53" cy="48" r="2.5" fill="#1e293b"/>
+                    <circle cx="65" cy="48" r="2.5" fill="#1e293b"/>
+                    <path d="M 57 54 Q 59 58 61 54" stroke="#1e293b" stroke-width="2" fill="none" stroke-linecap="round"/>
+                </svg>
+            `,
+            makanan: `
+                <svg viewBox="0 0 100 100" class="w-40 h-40 mx-auto filter drop-shadow">
+                    <circle cx="43" cy="55" r="20" fill="#ef4444" stroke="#b91c1c" stroke-width="3"/>
+                    <circle cx="57" cy="55" r="20" fill="#ef4444" stroke="#b91c1c" stroke-width="3"/>
+                    <path d="M 50 35 Q 50 20 45 15" stroke="#78350f" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    <path d="M 50 25 Q 65 15 62 28 Z" fill="#22c55e" stroke="#15803d" stroke-width="2"/>
+                    <ellipse cx="36" cy="45" rx="3" ry="6" fill="#ffffff" transform="rotate(-15 36 45)"/>
+                    <circle cx="43" cy="55" r="3" fill="#ffffff"/>
+                    <circle cx="57" cy="55" r="3" fill="#ffffff"/>
+                    <path d="M 46 62 Q 50 67 54 62" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+                </svg>
+            `,
+            jemuran: `
+                <svg viewBox="0 0 100 100" class="w-32 h-32 mx-auto">
+                    <line x1="10" y1="80" x2="10" y2="20" stroke="#78350f" stroke-width="4" stroke-linecap="round"/>
+                    <line x1="90" y1="80" x2="90" y2="20" stroke="#78350f" stroke-width="4" stroke-linecap="round"/>
+                    <line x1="10" y1="30" x2="90" y2="30" stroke="#78350f" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M 30 30 L 40 45 L 45 42 L 45 65 L 65 65 L 65 42 L 70 45 L 80 30 L 65 30 Q 55 35 45 30 Z" fill="#ec4899" stroke="#be185d" stroke-width="3" stroke-linejoin="round"/>
+                    <rect x="38" y="27" width="4" height="8" fill="#facc15" rx="1"/>
+                    <rect x="68" y="27" width="4" height="8" fill="#facc15" rx="1"/>
+                </svg>
+            `,
+            turbin_air: `
+                <svg viewBox="0 0 100 100" class="w-32 h-32 mx-auto">
+                    <circle cx="50" cy="50" r="35" fill="none" stroke="#047857" stroke-width="6" stroke-dasharray="10 10" class="animate-[spin_10s_linear_infinite]"/>
+                    <circle cx="50" cy="50" r="10" fill="#065f46" stroke="#047857" stroke-width="3"/>
+                    <line x1="50" y1="15" x2="50" y2="85" stroke="#047857" stroke-width="4"/>
+                    <line x1="15" y1="50" x2="85" y2="50" stroke="#047857" stroke-width="4"/>
+                    <line x1="25" y1="25" x2="75" y2="75" stroke="#047857" stroke-width="3"/>
+                    <line x1="25" y1="75" x2="75" y2="25" stroke="#047857" stroke-width="3"/>
+                </svg>
+            `,
+            kincir_angin: `
+                <svg viewBox="0 0 100 100" class="w-32 h-32 mx-auto">
+                    <path d="M 45 85 L 48 45 L 52 45 L 55 85 Z" fill="#64748b" stroke="#475569" stroke-width="3"/>
+                    <g transform="translate(50,45) " class="animate-[spin_5s_linear_infinite]">
+                        <circle cx="0" cy="0" r="6" fill="#f59e0b"/>
+                        <path d="M -4 -4 L -30 -30 L -15 -35 Z" fill="#facc15" stroke="#d97706" stroke-width="2"/>
+                        <path d="M 4 -4 L 30 -30 L 35 -15 Z" fill="#facc15" stroke="#d97706" stroke-width="2"/>
+                        <path d="M 4 4 L 30 30 L 15 35 Z" fill="#facc15" stroke="#d97706" stroke-width="2"/>
+                        <path d="M -4 4 L -30 30 L -35 15 Z" fill="#facc15" stroke="#d97706" stroke-width="2"/>
+                    </g>
+                </svg>
+            `,
+            anak_lari: `
+                <svg viewBox="0 0 100 100" class="w-32 h-32 mx-auto">
+                    <circle cx="50" cy="25" r="12" fill="#fed7aa" stroke="#ea580c" stroke-width="3"/>
+                    <path d="M 50 37 L 48 58 L 35 75" stroke="#ea580c" stroke-width="6" stroke-linecap="round" fill="none"/>
+                    <path d="M 48 58 L 60 75 L 75 72" stroke="#ea580c" stroke-width="6" stroke-linecap="round" fill="none"/>
+                    <path d="M 48 42 L 30 48 L 22 38" stroke="#ea580c" stroke-width="6" stroke-linecap="round" fill="none"/>
+                    <path d="M 48 42 L 65 48 L 75 40" stroke="#ea580c" stroke-width="6" stroke-linecap="round" fill="none"/>
+                    <path d="M 44 37 L 56 37 L 52 55 L 44 55 Z" fill="#ef4444"/>
+                </svg>
+            `
+        };
+
+        const slides = [
+            {
+                title: "1. Matahari",
+                desc: "Matahari adalah sumber energi paling besar di bumi! Matahari menghasilkan energi PANAS dan CAHAYA. Berguna untuk menjemur pakaian, menghangatkan tubuh, dan menerangi bumi.",
+                image: svgAssets.matahari,
+                voiceText: "Satu. Matahari. Matahari adalah sumber energi paling besar di bumi! Matahari menghasilkan energi panas dan cahaya. Berguna untuk menjemur pakaian, menghangatkan tubuh, dan menerangi bumi."
+            },
+            {
+                title: "2. Air",
+                desc: "Air yang mengalir menghasilkan energi GERAK. Air yang deras bisa digunakan untuk memutar kincir air atau menghasilkan energi listrik yang menerangi rumah kita.",
+                image: svgAssets.air,
+                voiceText: "Dua. Air. Air yang mengalir menghasilkan energi gerak. Air yang deras bisa digunakan untuk memutar kincir air atau menghasilkan energi listrik yang menerangi rumah kita."
+            },
+            {
+                title: "3. Angin",
+                desc: "Angin adalah udara yang bergerak. Angin menghasilkan energi GERAK yang bisa menerbangkan layang-layang, menjalankan perahu layar, dan memutar kincir angin raksasa.",
+                image: svgAssets.angin,
+                voiceText: "Tiga. Angin. Angin adalah udara yang bergerak. Angin menghasilkan energi gerak yang bisa menerbangkan layang-layang, menjalankan perahu layar, dan memutar kincir angin raksasa."
+            },
+            {
+                title: "4. Makanan",
+                desc: "Makanan adalah sumber energi bagi MANUSIA! Makanan sehat membuat tubuh kita berenergi sehingga bisa berjalan, berlari, belajar, dan bermain dengan ceria.",
+                image: svgAssets.makanan,
+                voiceText: "Empat. Makanan. Makanan adalah sumber energi bagi manusia! Makanan sehat membuat tubuh kita berenergi sehingga bisa berjalan, berlari, belajar, dan bermain dengan ceria."
+            }
+        ];
+
+        const quizPool = [
+            {
+                question: "Mana sumber energi yang paling besar di bumi?",
+                image: svgAssets.matahari,
+                options: [
+                    { text: "Matahari ☀️", isCorrect: true, feedback: "Hebat! Matahari adalah sumber energi terbesar dan sangat terang!" },
+                    { text: "Angin 💨", isCorrect: false, feedback: "Kurang tepat. Angin memang kuat, tapi Matahari adalah yang paling besar." }
+                ],
+                voiceText: "Mana sumber energi yang paling besar di bumi? Pilih jawaban di bawah."
+            },
+            {
+                question: "Kita makan setiap hari agar tubuh kita mendapatkan apa?",
+                image: svgAssets.makanan,
+                options: [
+                    { text: "Energi & Tenaga 💪", isCorrect: true, feedback: "Pintar! Makanan memberi kita energi untuk bermain dan belajar!" },
+                    { text: "Mengantuk 😴", isCorrect: false, feedback: "Kurang pas. Kalau kita makan makanan sehat, tubuh justru jadi bertenaga, bukan mengantuk." }
+                ],
+                voiceText: "Kita makan setiap hari agar tubuh kita mendapatkan apa? Pilih jawaban di bawah."
+            },
+            {
+                question: "Apa yang bisa digerakkan oleh energi angin?",
+                image: svgAssets.angin,
+                options: [
+                    { text: "Kincir Air 💧", isCorrect: false, feedback: "Kurang tepat. Kincir air digerakkan oleh air yang mengalir." },
+                    { text: "Perahu Layar ⛵", isCorrect: true, feedback: "Luar biasa! Angin meniup layar perahu sehingga bisa berjalan di laut!" }
+                ],
+                voiceText: "Apa yang bisa digerakkan oleh energi angin? Pilih jawaban di bawah."
+            },
+            {
+                question: "Untuk apa energi panas dari Matahari digunakan di rumah?",
+                image: svgAssets.jemuran,
+                options: [
+                    { text: "Menjemur Baju 👕", isCorrect: true, feedback: "Betul sekali! Panas matahari membuat baju basah menjadi cepat kering!" },
+                    { text: "Membuat Es Batu ❄️", isCorrect: false, feedback: "Salah sayang. Panas matahari justru mencairkan es batu, bukan membuatnya." }
+                ],
+                voiceText: "Untuk apa energi panas dari Matahari digunakan di rumah? Pilih jawaban di bawah."
+            }
+        ];
+
+        const matchSources = [
+            { id: 'src-1', name: 'Matahari ☀️', type: 'matahari', color: 'bg-amber-100 border-amber-400 text-amber-900' },
+            { id: 'src-2', name: 'Air Mengalir 💧', type: 'air', color: 'bg-sky-100 border-sky-400 text-sky-900' },
+            { id: 'src-3', name: 'Angin 💨', type: 'angin', color: 'bg-slate-100 border-slate-400 text-slate-900' },
+            { id: 'src-4', name: 'Makanan Sehat 🍎', type: 'makanan', color: 'bg-rose-100 border-rose-400 text-rose-900' }
+        ];
+
+        const matchUses = [
+            { id: 'use-3', name: 'Kincir Angin Berputar', matchType: 'angin', color: 'bg-emerald-50 border-emerald-400 text-emerald-900' },
+            { id: 'use-1', name: 'Menjemur Pakaian', matchType: 'matahari', color: 'bg-emerald-50 border-emerald-400 text-emerald-900' },
+            { id: 'use-4', name: 'Anak Berlari Aktif', matchType: 'makanan', color: 'bg-emerald-50 border-emerald-400 text-emerald-900' },
+            { id: 'use-2', name: 'Memutar Kincir Air', matchType: 'air', color: 'bg-emerald-50 border-emerald-400 text-emerald-900' }
+        ];
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Batalkan pembicaraan sebelumnya
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID'; // Bahasa Indonesia
+                utterance.rate = 0.85;    // Lambat dan bersahabat untuk anak berkebutuhan khusus
+                utterance.pitch = 1.1;   
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function changeScreen(screenId) {
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+
+            // Mendapatkan seluruh kontainer layar secara aman
+            const sHome = document.getElementById('screen-home');
+            const sLearn = document.getElementById('screen-learn');
+            const sPlay = document.getElementById('screen-play');
+            const sQuiz = document.getElementById('screen-quiz');
+            const sMatch = document.getElementById('screen-match');
+            const sCongrats = document.getElementById('screen-congrats');
+
+            // Sembunyikan layar secara aman sebelum mengganti kelas
+            if(sHome) sHome.classList.add('hidden');
+            if(sLearn) sLearn.classList.add('hidden');
+            if(sPlay) sPlay.classList.add('hidden');
+            if(sQuiz) sQuiz.classList.add('hidden');
+            if(sMatch) sMatch.classList.add('hidden');
+            if(sCongrats) sCongrats.classList.add('hidden');
+
+            // Tampilkan layar yang aktif
+            const activeTarget = document.getElementById(`screen-${screenId}`);
+            if (activeTarget) {
+                activeTarget.classList.remove('hidden');
+            } else {
+                console.error(`Layar dengan ID screen-${screenId} tidak ditemukan.`);
+            }
+            
+            activeScreen = screenId;
+
+            // Navigasi suara pembuka untuk layar terkait
+            if (screenId === 'home') {
+                speak("Selamat datang di permainan Sumber Energi Eno! Pilih tombol hijau untuk Belajar, atau tombol kuning untuk Bermain!");
+            } else if (screenId === 'learn') {
+                currentSlideIndex = 0;
+                renderSlide();
+            } else if (screenId === 'play') {
+                speak("Ayo pilih permainanmu! Satu, tebak gambar energi. Dua, pasangkan energi.");
+            } else if (screenId === 'congrats') {
+                speak(`Luar biasa! Kamu berhasil mengumpulkan nilai ${score}. Kamu pintar sekali!`);
+                const scoreBox = document.getElementById('congrats-score');
+                if (scoreBox) scoreBox.innerText = score;
+            }
+        }
+
+        function renderSlide() {
+            const slide = slides[currentSlideIndex];
+            const container = document.getElementById('slide-container');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <div class="animate__animated animate__fadeIn flex flex-col items-center gap-4">
+                    <h4 class="text-3xl font-black text-emerald-600">${slide.title}</h4>
+                    <div class="bg-sky-50 border-4 border-sky-200 rounded-3xl p-6 shadow-sm my-2 max-w-sm">
+                        ${slide.image}
+                    </div>
+                    <p class="text-xl font-bold text-sky-950 leading-relaxed max-w-lg mt-2">${slide.desc}</p>
+                </div>
+            `;
+
+            const slideIndicator = document.getElementById('slide-indicator');
+            if (slideIndicator) slideIndicator.innerText = `${currentSlideIndex + 1} / ${slides.length}`;
+
+            const btnPrev = document.getElementById('btn-prev');
+            if (btnPrev) btnPrev.disabled = currentSlideIndex === 0;
+            
+            const btnNext = document.getElementById('btn-next');
+            if (btnNext) {
+                if (currentSlideIndex === slides.length - 1) {
+                    btnNext.innerHTML = 'Selesai 🏁';
+                    btnNext.className = 'flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-extrabold py-3 px-6 rounded-2xl text-xl border-b-4 border-yellow-700 btn-bounce';
+                } else {
+                    btnNext.innerHTML = 'Lanjut »';
+                    btnNext.className = 'flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold py-3 px-6 rounded-2xl text-xl border-b-4 border-emerald-700 btn-bounce';
+                }
+            }
+
+            speak(slide.voiceText);
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < slides.length - 1) {
+                currentSlideIndex++;
+                renderSlide();
+            } else {
+                score += 10;
+                updateScoreDisplay();
+                showFeedback('🏆', 'Hebat!', 'Kamu sudah selesai belajar dasar-dasar energi. Sekarang kamu dapat hadiah bonus 10 poin!', 'Main Game', () => {
+                    changeScreen('play');
+                });
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                renderSlide();
+            }
+        }
+
+        function speakCurrentSlide() {
+            speak(slides[currentSlideIndex].voiceText);
+        }
+
+        function startPlay() {
+            changeScreen('play');
+        }
+
+        function startGameQuiz() {
+            currentQuizIndex = 0;
+            changeScreen('quiz');
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const quiz = quizPool[currentQuizIndex];
+            const qText = document.getElementById('quiz-text');
+            const qImg = document.getElementById('quiz-image-container');
+            const qOpt = document.getElementById('quiz-options-container');
+
+            if (qText) qText.innerText = quiz.question;
+            if (qImg) qImg.innerHTML = quiz.image;
+            if (qOpt) {
+                qOpt.innerHTML = '';
+                quiz.options.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = `p-6 text-xl font-extrabold rounded-2xl border-4 shadow-md transition-transform btn-bounce text-slate-800 ${
+                        idx === 0 ? 'bg-amber-100 border-amber-400 hover:bg-amber-200' : 'bg-emerald-100 border-emerald-400 hover:bg-emerald-200'
+                    }`;
+                    btn.innerHTML = opt.text;
+                    btn.onclick = () => handleQuizAnswer(opt);
+                    qOpt.appendChild(btn);
+                });
+            }
+
+            speakQuizQuestion();
+        }
+
+        function speakQuizQuestion() {
+            const quiz = quizPool[currentQuizIndex];
+            speak(quiz.question + ". Pilihan pertama: " + quiz.options[0].text + ". Pilihan kedua: " + quiz.options[1].text);
+        }
+
+        function handleQuizAnswer(option) {
+            if (option.isCorrect) {
+                score += 20;
+                updateScoreDisplay();
+                showFeedback('🎉', 'BENAR!', option.feedback, 'Kuis Selanjutnya', () => {
+                    nextQuizQuestion();
+                });
+            } else {
+                showFeedback('💡', 'Coba Lagi Yuk', option.feedback, 'Coba Lagi', () => {
+                    closeFeedback();
+                    speakQuizQuestion();
+                });
+            }
+        }
+
+        function nextQuizQuestion() {
+            if (currentQuizIndex < quizPool.length - 1) {
+                currentQuizIndex++;
+                renderQuizQuestion();
+            } else {
+                showFeedback('🎊', 'Selesai!', 'Hebat! Kamu telah menyelesaikan semua kuis Tebak Gambar!', 'Main Game Lain', () => {
+                    changeScreen('play');
+                });
+            }
+        }
+
+        function startGameMatch() {
+            selectedLeftId = null;
+            selectedRightId = null;
+            matchedPairs = [];
+            changeScreen('match');
+            renderMatchBoard();
+            speakMatchGuide();
+        }
+
+        function speakMatchGuide() {
+            speak("Pasangkan gambar di sebelah Kiri dengan kegunaannya yang tepat di sebelah Kanan.");
+        }
+
+        function renderMatchBoard() {
+            const leftContainer = document.getElementById('match-left-container');
+            const rightContainer = document.getElementById('match-right-container');
+            
+            if (!leftContainer || !rightContainer) return;
+
+            leftContainer.innerHTML = '';
+            rightContainer.innerHTML = '';
+
+            // Menampilkan Sisi Kiri (Sumber)
+            matchSources.forEach(src => {
+                const isMatched = matchedPairs.includes(src.id);
+                const isSelected = selectedLeftId === src.id;
+
+                const btn = document.createElement('button');
+                btn.disabled = isMatched;
+                btn.className = `w-full p-4 rounded-xl border-4 font-black text-lg text-center transition-all flex items-center justify-between shadow ${src.color} ${
+                    isMatched ? 'opacity-30 border-gray-300 bg-gray-200 cursor-not-allowed' : 'btn-bounce'
+                } ${
+                    isSelected ? 'ring-4 ring-indigo-600 scale-105' : ''
+                }`;
+                btn.innerHTML = `
+                    <span>${src.name}</span>
+                    <span class="text-sm">${isMatched ? '✅' : '👉'}</span>
+                `;
+                btn.onclick = () => selectLeft(src.id, src.name);
+                leftContainer.appendChild(btn);
+            });
+
+            // Menampilkan Sisi Kanan (Kegunaan)
+            matchUses.forEach(use => {
+                const correspondingSource = matchSources.find(s => s.type === use.matchType);
+                const isMatched = correspondingSource ? matchedPairs.includes(correspondingSource.id) : false;
+                const isSelected = selectedRightId === use.id;
+
+                const btn = document.createElement('button');
+                btn.disabled = isMatched;
+                btn.className = `w-full p-4 rounded-xl border-4 font-black text-lg text-center transition-all flex items-center justify-between shadow ${use.color} ${
+                    isMatched ? 'opacity-30 border-gray-300 bg-gray-200 cursor-not-allowed' : 'btn-bounce'
+                } ${
+                    isSelected ? 'ring-4 ring-indigo-600 scale-105' : ''
+                }`;
+                btn.innerHTML = `
+                    <span>${use.name}</span>
+                    <span class="text-sm">${isMatched ? '✅' : '👈'}</span>
+                `;
+                btn.onclick = () => selectRight(use.id, use.name);
+                rightContainer.appendChild(btn);
+            });
+        }
+
+        function selectLeft(id, name) {
+            selectedLeftId = id;
+            speak(name);
+            renderMatchBoard();
+            checkMatch();
+        }
+
+        function selectRight(id, name) {
+            selectedRightId = id;
+            speak(name);
+            renderMatchBoard();
+            checkMatch();
+        }
+
+        function checkMatch() {
+            if (selectedLeftId && selectedRightId) {
+                const source = matchSources.find(s => s.id === selectedLeftId);
+                const use = matchUses.find(u => u.id === selectedRightId);
+
+                if (source && use && source.type === use.matchType) {
+                    matchedPairs.push(selectedLeftId);
+                    score += 25;
+                    updateScoreDisplay();
+                    
+                    showFeedback('🌈', 'COCOK!', `Sempurna! ${source.name} sangat cocok dengan ${use.name}!`, 'Hebat!', () => {
+                        closeFeedback();
+                        resetMatchSelection();
+                        renderMatchBoard();
+                        
+                        if (matchedPairs.length === matchSources.length) {
+                            setTimeout(() => {
+                                showFeedback('👑', 'Luar Biasa!', 'Kamu berhasil memasangkan semuanya dengan benar!', 'Selesai Bermain', () => {
+                                    changeScreen('congrats');
+                                });
+                            }, 500);
+                        }
+                    });
+                } else {
+                    showFeedback('❌', 'Bukan Pasangannya', `Cobalah pasangkan pilihan tersebut dengan kegunaan yang lain!`, 'Coba Lagi', () => {
+                        closeFeedback();
+                        resetMatchSelection();
+                        renderMatchBoard();
+                    });
+                }
+            }
+        }
+
+        function resetMatchSelection() {
+            selectedLeftId = null;
+            selectedRightId = null;
+        }
+
+        let activeFeedbackCallback = null;
+
+        function showFeedback(emoji, title, desc, btnText, callback) {
+            const fEmoji = document.getElementById('feedback-emoji');
+            const fTitle = document.getElementById('feedback-title');
+            const fDesc = document.getElementById('feedback-desc');
+            const fBtn = document.getElementById('feedback-btn');
+            const fCard = document.getElementById('feedback-card');
+            const fOverlay = document.getElementById('feedback-overlay');
+
+            if (fEmoji) fEmoji.innerText = emoji;
+            if (fTitle) fTitle.innerText = title;
+            if (fDesc) fDesc.innerText = desc;
+            if (fBtn) {
+                fBtn.innerText = btnText;
+                if (emoji === '❌' || emoji === '💡') {
+                    if (fCard) fCard.className = "bg-rose-50 border-rose-400 border-8 rounded-3xl p-6 text-center max-w-sm w-full animate__animated animate__shakeX";
+                    fBtn.className = "w-full bg-rose-500 hover:bg-rose-600 text-white font-black text-xl py-3 rounded-2xl shadow-md btn-bounce";
+                } else {
+                    if (fCard) fCard.className = "bg-emerald-50 border-emerald-400 border-8 rounded-3xl p-6 text-center max-w-sm w-full animate__animated animate__bounceIn";
+                    fBtn.className = "w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xl py-3 rounded-2xl shadow-md btn-bounce";
+                }
+            }
+
+            if (fOverlay) fOverlay.classList.remove('hidden');
+            activeFeedbackCallback = callback;
+
+            speak(`${title}. ${desc}`);
+        }
+
+        function closeFeedback() {
+            const fOverlay = document.getElementById('feedback-overlay');
+            if (fOverlay) fOverlay.classList.add('hidden');
+            if (activeFeedbackCallback) {
+                activeFeedbackCallback();
+                activeFeedbackCallback = null;
+            }
+        }
+
+        function updateScoreDisplay() {
+            const scoreDisplay = document.getElementById('score-display');
+            if (scoreDisplay) {
+                scoreDisplay.innerText = score;
+                scoreDisplay.classList.add('animate__rubberBand');
+                setTimeout(() => {
+                    scoreDisplay.classList.remove('animate__rubberBand');
+                }, 1000);
+            }
+        }
+
+        window.onload = function() {
+            // Membuka layar Beranda dengan aman
+            changeScreen('home');
+            
+            // Mengaitkan pemicu musik saat interaksi layar pertama terjadi
+            document.addEventListener('click', startMusicOnFirstInteraction);
+            document.addEventListener('touchstart', startMusicOnFirstInteraction);
+        };
+    </script>
+</body>
+</html>
